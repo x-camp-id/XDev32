@@ -1,0 +1,50 @@
+#######################################
+# Syntax Coloring Map For XDev32
+#######################################
+
+#######################################
+# Library (KEYWORD3)
+#######################################
+
+XDev32	KEYWORD3
+XD	KEYWORD3
+xd	KEYWORD3
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Btn	        KEYWORD1
+hdc1080	    KEYWORD1
+veml6030	KEYWORD1
+mpu6050	    KEYWORD1
+mpu6050	    KEYWORD1
+rgbled	    KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+update	KEYWORD2
+
+isPressed	KEYWORD2
+wasPressed	KEYWORD2
+pressedFor	KEYWORD2
+
+isReleased	KEYWORD2
+wasReleased	KEYWORD2
+releasedFor	KEYWORD2
+wasReleasefor	KEYWORD2
+
+held	KEYWORD2
+repeat	KEYWORD2
+timeHeld	KEYWORD2
+
+WHITE	LITERAL1
+BLACK	LITERAL1
+INVERT	LITERAL1
+GRAY	LITERAL1
+RED	    LITERAL1
+BLUE	LITERAL1
+GREEN	LITERAL1
