@@ -24,6 +24,8 @@
 
 #define USE_SERIAL      Serial
 
+#define DEBOUNCE_MS 10
+
 class XDev32 {
 
  public:
@@ -31,7 +33,7 @@ class XDev32 {
 	void begin(bool SerialEnable=true, bool Sim7000Enable=false);
     void update();
 
-    #define DEBOUNCE_MS 10
+
     Button Btn = Button(XD_BUTTON, true, DEBOUNCE_MS);
 
     HDC1080 hdc1080;
