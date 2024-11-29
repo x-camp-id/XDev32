@@ -10,7 +10,11 @@
     "type": "git",
     "url": "https://github.com/x-camp-id/XDev32"
   },
+  "dependencies": {
+        "bblanchon/ArduinoJson": "^6.21.5"
+  },
   "version": "1.0.0",
   "framework": "arduino",
-  "platforms": "espressif32"
+  "platforms": "espressif32",
+  "examples": "examples/*/*.ino"
 }
