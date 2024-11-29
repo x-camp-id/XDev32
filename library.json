@@ -3,14 +3,14 @@
   "description": "An ESP32 based Arduino board",
   "keywords": "XDev32",
   "authors": {
-    "name": "tjstyle, XDev32",
+    "name": "tjstyle, farisrfp, XDev32",
     "url": "http://x-camp.id"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tjstyle/XDev32.git"
+    "url": "https://github.com/x-camp-id/XDev32"
   },
-  "version": "0.1.0",
+  "version": "1.0.0",
   "framework": "arduino",
   "platforms": "espressif32"
 }
