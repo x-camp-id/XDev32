@@ -1,13 +1,15 @@
 /**
- * XDev32 MQTT Subscribe Example
- * Demonstrates how to receive RPC commands from ThingsBoard IoT platform
- * using MQTT protocol
+ * XDev32 Demo Example
+ * Demonstrates basic functionality of XDev32 Development Board including:
+ * - Button input
+ * - RGB LED control
+ * - Temperature, humidity and light sensors
+ * - Gyroscope readings
  *
  * Hardware: XDev32 Development Board
  * Library Dependencies:
  * - XDev32
  */
-
 
 #include <Arduino.h>
 #include <XDev32.h>

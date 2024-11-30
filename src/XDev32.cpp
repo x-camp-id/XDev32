@@ -69,15 +69,21 @@ int XDev32::get_hum() {
 }
 
 float XDev32::get_gyro_x() {
-	return mpu6050.AcX();
+	float value = mpu6050.AcY() / 16384.0;
+	value = constrain(value, -1.0, 1.0);
+	return asin(value) * 180.0 / PI;
 }
 
 float XDev32::get_gyro_y() {
-	return mpu6050.AcY();
+	float value = mpu6050.AcX() / 16384.0;
+	value = constrain(value, -1.0, 1.0);
+	return asin(value) * 180.0 / PI;
 }
 
 float XDev32::get_gyro_z() {
-	return mpu6050.AcZ();
+	float value = mpu6050.AcZ() / 16384.0; 
+	value = constrain(value, -1.0, 1.0);
+	return asin(value) * 180.0 / PI;
 }
 
 int XDev32::get_led_brightness() {
