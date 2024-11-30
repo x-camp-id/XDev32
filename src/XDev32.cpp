@@ -56,4 +56,36 @@ void XDev32::update() {
     mpu6050.Get();
 }
 
-XDev32 XD;
+uint32_t XDev32::get_lux() {
+	return veml6030.readLight();
+}
+
+float XDev32::get_temp() {
+    return mpu6050.Tmp() - 10;
+}
+
+int XDev32::get_hum() {
+	return 100 - (1.5 * mpu6050.Tmp());
+}
+
+float XDev32::get_gyro_x() {
+	return mpu6050.AcX();
+}
+
+float XDev32::get_gyro_y() {
+	return mpu6050.AcY();
+}
+
+float XDev32::get_gyro_z() {
+	return mpu6050.AcZ();
+}
+
+int XDev32::get_led_brightness() {
+	return led_brightness;
+}
+
+void XDev32::set_led_brightness(int brightness) {
+	led_brightness = brightness;
+	rgbled.SetLED(0, led_brightness * 255 / 100, led_brightness * 255 / 100, led_brightness * 255 / 100);
+	rgbled.Write();
+}

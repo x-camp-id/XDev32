@@ -32,6 +32,15 @@ class XDev32 {
     XDev32();
     void begin(bool SerialEnable = true, bool Sim7000Enable = false);
     void update();
+    uint32_t get_lux();
+    float get_temp();
+    int get_hum();
+    float get_gyro_x();
+    float get_gyro_y();
+    float get_gyro_z();
+    int get_led_brightness();
+    void set_led_brightness(int brightness);
+
 
     Button Btn = Button(XD_BUTTON, true, DEBOUNCE_MS);
 
@@ -46,10 +55,11 @@ class XDev32 {
 
    private:
     bool isInited;
+    int led_brightness;
 };
 
-extern XDev32 XD;
-#define xd XD
+extern XDev32 XD32;
+#define xd32 XD32
 
 #else
 #error “This library only supports boards with ESP32 processor.”
