@@ -1,7 +1,7 @@
 /**
  * ThingsBoard XDev32 MQTT Example
- * Demonstrates how to send telemetry data to ThingsBoard IoT platform
- * using MQTT protocol
+ * Demonstrates how to send telemetry data and receive RPC commands
+ * using MQTT protocol with ThingsBoard.
  *
  * Hardware: XDev32 Development Board
  * Library Dependencies:
@@ -29,9 +29,10 @@ const char* DEVICE_TOKEN = "YOUR_DEVICE_TOKEN";
 
 // MQTT topics
 const char* TELEMETRY_TOPIC = "v1/devices/me/telemetry";
+const char* RPC_REQUEST_TOPIC = "v1/devices/me/rpc/request/+";
 
 // Constants
-const unsigned long PUBLISH_INTERVAL = 2000;  // Publish every 1 second
+const unsigned long PUBLISH_INTERVAL = 500;  // Publish every 0.5 second
 const int JSON_BUFFER_SIZE = 200;
 
 // Global objects
@@ -39,6 +40,46 @@ XDev32 XD32;
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 unsigned long lastPublishTime = 0;
+
+/**
+ * Handles RPC messages from ThingsBoard
+ */
+void handleRPCMessage(char* topic, byte* payload, unsigned int length) {
+    // Extract request ID from topic
+    String requestId = String(topic).substring(26); // extract ID after "request/"
+    
+    // Create response topic
+    String responseTopic = "v1/devices/me/rpc/response/" + requestId;
+    
+    // Parse JSON payload
+    StaticJsonDocument<200> doc;
+    DeserializationError error = deserializeJson(doc, payload, length);
+    
+    if (error) {
+      Serial.println("Failed to parse JSON");
+      return;
+    }
+
+    // Process the message
+    String method = doc["method"];
+    Serial.println("Received RPC method: " + method);
+
+    // Prepare response
+    String responsePayload;
+    
+    if (method == "getLedValue") {
+      responsePayload = String(XD32.get_led_brightness());
+    } else if (method == "setLedValue") {
+      int brightness = doc["params"];
+      XD32.set_led_brightness(brightness);
+      responsePayload = String(brightness);
+    }  else {
+      responsePayload = "Unsupported method";
+    }
+
+    // Send response
+    mqttClient.publish(responseTopic.c_str(), responsePayload.c_str());
+}
 
 /**
  * Connects to WiFi network
@@ -75,6 +116,9 @@ void connectMQTT() {
 
         if (mqttClient.connect("ESP32Client", DEVICE_TOKEN, NULL)) {
             Serial.println("connected");
+            // Subscribe to RPC topic after connection
+            mqttClient.subscribe(RPC_REQUEST_TOPIC);
+            Serial.println("Subscribed to RPC requests");
         } else {
             Serial.print("failed, rc=");
             Serial.print(mqttClient.state());
@@ -96,6 +140,7 @@ void setup() {
     }
 
     mqttClient.setServer(MQTT_SERVER, MQTT_PORT);
+    mqttClient.setCallback(handleRPCMessage);
 }
 
 void loop() {
